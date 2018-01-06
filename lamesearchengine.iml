@@ -20,5 +20,18 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/LameInternetSearchEngine" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/LameInternetSearchEngine" />
+        </SOURCES>
+        <jarDirectory url="file://$MODULE_DIR$/LameInternetSearchEngine" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/LameInternetSearchEngine" recursive="false" type="SOURCES" />
+      </library>
+    </orderEntry>
   </component>
 </module>
