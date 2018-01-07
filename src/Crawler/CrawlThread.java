@@ -29,7 +29,7 @@ public class CrawlThread implements Runnable {
         this.urlQueue = urlQueue;
         this.targetURL = targetURL;
         this.dirPath = dirPath;
-        toleration =2;
+        toleration = 10;
         maxDepth = 5;
     }
 
@@ -75,24 +75,17 @@ public class CrawlThread implements Runnable {
                         }
 
                         synchronized (urlQueue) {
-                           // System.out.println("mama: " + url  + " " +(targetURL.depth + 1));
                             urlQueue.add(new URLTrial(url, targetURL.depth + 1));
                         }
                     }
-
                 }
-
             }
-
-
-
         } catch (IOException e) {
             System.out.println("Failure to connect: " + targetURL.url);
             targetURL.failCount++;
             if(targetURL.failCount<toleration) urlQueue.add(targetURL);
             //e.printStackTrace();
         }
-
     }
 
     private static String getHostName(String url) throws MalformedURLException {

@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class Crawler {
     HashMap<String, String> urlCacheHash;
@@ -14,7 +15,7 @@ public class Crawler {
     public Crawler(String[] rootURLs) {
         urlCacheHash = new HashMap<>();
         urlCount = new HashMap<>();
-        urlQueue = new LinkedList<URLTrial>();
+        urlQueue = new LinkedList<>();
         this.rootURLs = rootURLs;
     }
 
@@ -28,19 +29,17 @@ public class Crawler {
     public void crawl(int maxThread) throws InterruptedException {
         init();
 
-        ThreadPoolExecutor threadPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
-
+        ThreadPoolExecutor threadPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(maxThread);
+        System.out.println("Alive: " +threadPool.getKeepAliveTime( TimeUnit.MILLISECONDS) + "");
         while (true){
-            System.out.println("ekhon ache: " + urlQueue.size());
-
             if (urlQueue.isEmpty()) {
-                if (threadPool.getActiveCount() == 0)   break;
+                if (threadPool.getActiveCount()==0)   break;
                 Thread.sleep(1000);
                 continue;
             }
 
             URLTrial top = urlQueue.remove();
-            System.out.println(top.url);
+            System.out.println(top.url + " " + top.failCount + " " + top.depth);
             threadPool.execute(new CrawlThread(urlCacheHash, urlCount, urlQueue, top, "./" ));
         }
 
@@ -48,12 +47,12 @@ public class Crawler {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        String[] root = {"http://www.feynman.com/"};
+        String[] root = {"http://www.svvs.org/"};
         Crawler spiderMan = new Crawler(root);
         spiderMan.crawl();
     }
 
     public void crawl() throws InterruptedException {
-        crawl(50);
+        crawl(10);
     }
 }
