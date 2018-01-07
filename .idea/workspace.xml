@@ -1,22 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3ee4ada7-2852-4b51-ae1e-37b5842b46ff" name="Default" comment="Update threadpool exec">
-      <change beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/project-template.xml" afterPath="$PROJECT_DIR$/.idea/project-template.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+    <list default="true" id="3ee4ada7-2852-4b51-ae1e-37b5842b46ff" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change beforePath="$PROJECT_DIR$/lamesearchengine.iml" afterPath="$PROJECT_DIR$/lamesearchengine.iml" />
-      <change beforePath="$PROJECT_DIR$/out/production/lamesearchengine/Crawler/CrawlThread.class" afterPath="$PROJECT_DIR$/out/production/lamesearchengine/Crawler/CrawlThread.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/lamesearchengine/Crawler/Crawler.class" afterPath="$PROJECT_DIR$/out/production/lamesearchengine/Crawler/Crawler.class" />
-      <change beforePath="$PROJECT_DIR$/src/Crawler/CrawlThread.java" afterPath="$PROJECT_DIR$/src/Crawler/CrawlThread.java" />
-      <change beforePath="$PROJECT_DIR$/src/Crawler/Crawler.java" afterPath="$PROJECT_DIR$/src/Crawler/Crawler.java" />
-      <change beforePath="$PROJECT_DIR$/src/Crawler/ThreadPoolExecutorTest.java" afterPath="$PROJECT_DIR$/src/Crawler/ThreadPoolExecutorTest.java" />
-      <change beforePath="$PROJECT_DIR$/src/Crawler/URLTrial.java" afterPath="$PROJECT_DIR$/src/Crawler/URLTrial.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -277,7 +263,7 @@
       <workItem from="1515274796695" duration="1341000" />
       <workItem from="1515281135620" duration="934000" />
       <workItem from="1515282532737" duration="186000" />
-      <workItem from="1515313057366" duration="727000" />
+      <workItem from="1515313057366" duration="912000" />
     </task>
     <task id="LOCAL-00001" summary="Testing">
       <created>1515267394606</created>
@@ -293,11 +279,18 @@
       <option name="project" value="LOCAL" />
       <updated>1515270381186</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Update threadpool exec">
+      <created>1515313800392</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1515313800392</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3188000" />
+    <option name="totallyTimeSpent" value="3373000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1301" height="772" extended-state="6" />
