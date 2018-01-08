@@ -5,6 +5,8 @@ public class URLTrial {
     String url;
     int depth;
 
+    static String[] patterns = {".php", ".mp3", ".jpg", ".png", ".jpeg", ".gif", ".mp4"};
+
     public URLTrial(String url) {
         this.url = url;
         failCount = 0;
@@ -17,5 +19,10 @@ public class URLTrial {
         this.depth = depth;
     }
 
-
+    public static boolean isValid(String url) {
+        for (String s: patterns)
+            if (url.contains(s))
+                return false;
+        return true;
+    }
 }

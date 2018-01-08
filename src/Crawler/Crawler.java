@@ -4,22 +4,23 @@ import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 public class Crawler {
-    HashMap<String, String> urlCacheHash;
     HashMap<String, Integer> urlCount;
     Queue<URLTrial> urlQueue;
     String[] rootURLs;
+    Printer printer;
+    String targetDirectory;
 
-    public Crawler(String[] rootURLs) {
-        urlCacheHash = new HashMap<>();
+    public Crawler(String[] rootURLs, String targetDirectory) {
         urlCount = new HashMap<>();
         urlQueue = new LinkedList<>();
         this.rootURLs = rootURLs;
+        this.targetDirectory = targetDirectory;
+        printer = new Printer(targetDirectory);
     }
 
-    void init() {
+    private void init() {
         for(String s : rootURLs) {
             urlQueue.add(new URLTrial(s));
             urlCount.put(s,1);
@@ -30,7 +31,6 @@ public class Crawler {
         init();
 
         ThreadPoolExecutor threadPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(maxThread);
-        System.out.println("Alive: " +threadPool.getKeepAliveTime( TimeUnit.MILLISECONDS) + "");
         while (true){
             if (urlQueue.isEmpty()) {
                 if (threadPool.getActiveCount()==0)   break;
@@ -39,16 +39,17 @@ public class Crawler {
             }
 
             URLTrial top = urlQueue.remove();
-            System.out.println(top.url + " " + top.failCount + " " + top.depth);
-            threadPool.execute(new CrawlThread(urlCacheHash, urlCount, urlQueue, top, "./" ));
+            System.out.println(top.url + " " + top.failCount + " " + top.depth + " "+urlQueue.size());
+            threadPool.execute(new CrawlThread(urlCount, urlQueue, top, printer ));
         }
 
         threadPool.shutdown();
+        printer.close();
     }
 
     public static void main(String[] args) throws InterruptedException {
-        String[] root = {"http://www.svvs.org/"};
-        Crawler spiderMan = new Crawler(root);
+        String[] root = {"https://sentry.io/welcome/"};
+        Crawler spiderMan = new Crawler(root, "./Crawldata");
         spiderMan.crawl();
     }
 
