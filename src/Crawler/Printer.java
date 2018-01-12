@@ -20,7 +20,8 @@ public class Printer {
     public void print(String url, String text) {
         String fileName = targetDirectory + "/" + java.util.UUID.randomUUID().toString();
         urlCacheHash.put(url, fileName);
-        threadPool.execute(new PrinterThread(fileName, text));
+        
+        threadPool.execute(new PrinterThread(fileName, text, url));
     }
 
     public void close() {
