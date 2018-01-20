@@ -1,11 +1,11 @@
 package Crawler;
 
-public class URLTrial {
+class URLTrial {
     int failCount;
     String url;
     int depth;
 
-    static String[] patterns = {".php", ".mp3", ".jpg", ".png", ".jpeg", ".gif", ".mp4"};
+    private static String[] patterns = {".php", ".mp3", ".jpg", ".png", ".jpeg", ".gif", ".mp4"};
 
     public URLTrial(String url) {
         this.url = url;
