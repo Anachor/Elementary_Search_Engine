@@ -61,13 +61,11 @@ public class IndexerThread implements Runnable {
 
 
             for(String word : forwardIndex.keySet()) {
-                if(!invertedIndex.containsKey(word)) {
-                    synchronized (invertedIndex) {
+                synchronized (invertedIndex) {
+                    if(!invertedIndex.containsKey(word)) {
                         invertedIndex.put(word,new ArrayList<>());
                     }
-                }
 
-                synchronized (invertedIndex) {
                     invertedIndex.get(word).add(new ScoredURL(url, forwardIndex.get(word)));
                 }
             }
