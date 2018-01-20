@@ -11,32 +11,30 @@ import java.util.concurrent.TimeUnit;
 
 public class Indexificator {
     HashMap<String,ArrayList<ScoredURL>> invertedIndex;
-    HashMap<String,Integer> documentFrequency;
+    //HashMap<String,Integer> documentFrequency;
     ExecutorService executorService;
 
-    public Indexificator(HashMap<String, ArrayList<ScoredURL> > invertedIndex,
-                         HashMap<String, Integer> documentFrequency) {
+    public Indexificator(HashMap<String, ArrayList<ScoredURL> > invertedIndex) {
         this.invertedIndex = invertedIndex;
-        this.documentFrequency = documentFrequency;
+        //this.documentFrequency = documentFrequency;
         executorService = Executors.newFixedThreadPool(50);
     }
 
-    public Indexificator(HashMap<String, ArrayList<ScoredURL> > invertedIndex,
-                         HashMap<String, Integer> documentFrequency, int maxThread) {
+    public Indexificator(HashMap<String, ArrayList<ScoredURL> > invertedIndex, int maxThread) {
         this.invertedIndex = invertedIndex;
-        this.documentFrequency = documentFrequency;
+        //this.documentFrequency = documentFrequency;
         executorService = Executors.newFixedThreadPool(maxThread);
     }
 
     public Indexificator() {
         invertedIndex = new HashMap<>();
-        documentFrequency = new HashMap<>();
+        //documentFrequency = new HashMap<>();
         executorService = Executors.newFixedThreadPool(50);
     }
 
     public Indexificator(int maxThread) {
         invertedIndex = new HashMap<>();
-        documentFrequency = new HashMap<>();
+        //documentFrequency = new HashMap<>();
         executorService = Executors.newFixedThreadPool(maxThread);
     }
 
@@ -47,7 +45,7 @@ public class Indexificator {
         FilenameFilter crawldataFilter = (dir, name)->name.toLowerCase().endsWith(".crawldata");
 
         for (String file : source.list(crawldataFilter)) {
-            executorService.execute(new IndexerThread(sourceDir,file,invertedIndex,documentFrequency));
+            executorService.execute(new IndexerThread(sourceDir,file,invertedIndex));
         }
 
         executorService.shutdown();
@@ -60,14 +58,14 @@ public class Indexificator {
             e.printStackTrace();
         }
     }
-
+/*
     public void flushDocumentFrequency (String fileName) {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName))) {
             out.writeObject(documentFrequency);
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
 
     public void index(String sourceDir,String targetDir) throws InterruptedException {
@@ -75,7 +73,7 @@ public class Indexificator {
         FilenameFilter crawldataFilter = (dir, name)->name.toLowerCase().endsWith(".crawldata");
 
         for (String file : source.list(crawldataFilter)) {
-            executorService.execute(new IndexerThread(sourceDir,file,invertedIndex,documentFrequency));
+            executorService.execute(new IndexerThread(sourceDir,file,invertedIndex));
         }
 
         executorService.shutdown();
@@ -87,11 +85,8 @@ public class Indexificator {
 
         Thread t1 = new Thread(()->flushIndex(targetDir + "/" + "invertedIndex.idx"));
         t1.start();
-        Thread t2 = new Thread(()->flushDocumentFrequency(targetDir + "/" + "documentFrequency.freq"));
-        t2.start();
 
         t1.join();
-        t2.join();
 
     }
 

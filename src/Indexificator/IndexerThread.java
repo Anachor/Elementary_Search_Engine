@@ -13,17 +13,16 @@ public class IndexerThread implements Runnable {
     final String crawlFile;
     HashMap<String,Integer> forwardIndex;
     HashMap<String,ArrayList<ScoredURL> > invertedIndex;
-    HashMap<String,Integer> documentFrequency;
+    //HashMap<String,Integer> documentFrequency;
 
     public IndexerThread(String sourceDir, String crawlFile,
-                         HashMap<String, ArrayList<ScoredURL>> invertedIndex,
-                         HashMap<String, Integer> documentFrequency) {
+                         HashMap<String, ArrayList<ScoredURL>> invertedIndex) {
 
         this.sourceDir = sourceDir;
         this.crawlFile = crawlFile;
         this.forwardIndex = new HashMap<>();
         this.invertedIndex = invertedIndex;
-        this.documentFrequency = documentFrequency;
+        //this.documentFrequency = documentFrequency;
     }
 
     @Override
@@ -62,21 +61,11 @@ public class IndexerThread implements Runnable {
 
 
             for(String word : forwardIndex.keySet()) {
-                if(documentFrequency.containsKey(word)) {
-                    synchronized (documentFrequency) {
-                        documentFrequency.put(word, documentFrequency.get(word) + 1);
-                    }
-
-                } else {
-                    synchronized (documentFrequency) {
-                        documentFrequency.put(word,1);
-                    }
-                    synchronized (invertedIndex) {
+                synchronized (invertedIndex) {
+                    if(!invertedIndex.containsKey(word)) {
                         invertedIndex.put(word,new ArrayList<>());
                     }
-                }
 
-                synchronized (invertedIndex) {
                     invertedIndex.get(word).add(new ScoredURL(url, forwardIndex.get(word)));
                 }
             }
