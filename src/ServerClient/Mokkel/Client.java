@@ -1,39 +1,38 @@
 package ServerClient.Mokkel;
 
 import ServerClient.*;
+import javafx.application.Application;
+import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.util.Scanner;
 
 public class Client {
+    Scanner scanner;
+    NetworkUtil nc;
 
-    public Client(String serverAddress, int serverPort) {
-        NetworkUtil nc = null;
-        try {
-            Scanner scanner = new Scanner(System.in);
-            nc = new NetworkUtil(serverAddress, serverPort);
-
-            while (true) {
-                String query = scanner.nextLine();
-                SearchQuery searchQuery = new SearchQuery(query);
-                nc.write(searchQuery);
-                SearchResult s = (SearchResult) nc.read();
-                System.out.println(s.getResult());
-            }
-
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error reading: " + e);
-        } finally {
-            try {
-                if (nc!=null) nc.close();
-            } catch (IOException e) {
-                System.out.println("Error closing connection: "+e);
-            }
-        }
+    public Client(String serverAddress, int serverPort) throws IOException {
+        scanner = new Scanner(System.in);
+        nc = new NetworkUtil(serverAddress, serverPort);
     }
-    
-    public static void main(String args[]) {
-        String serverAddress = "127.0.0.1";
-        int serverPort = 33333;
-        Client client = new Client(serverAddress, serverPort);
+
+    public void write(SearchQuery searchQuery) throws IOException {
+        System.out.println(searchQuery.getQuery());
+        nc.write(searchQuery);
+    }
+
+    public SearchResult read() throws IOException, ClassNotFoundException {
+        SearchResult s = (SearchResult) nc.read();
+        System.out.println(s.getResult());
+        return s;
+    }
+
+    public void close() {
+        try {
+            if (nc != null)
+                nc.close();
+        } catch (IOException e) {
+            System.out.println("Error closing: " + e);
+        }
     }
 }

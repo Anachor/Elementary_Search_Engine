@@ -1,7 +1,5 @@
 package Indexificator;
 
-import Indexer.ForwardIndexMaker;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
