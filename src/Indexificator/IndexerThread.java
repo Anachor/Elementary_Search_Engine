@@ -2,28 +2,27 @@ package Indexificator;
 
 import edu.stanford.nlp.simple.Document;
 import edu.stanford.nlp.simple.Sentence;
-
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class IndexerThread implements Runnable {
     final String sourceDir;
+    final String targetDir;
     final String crawlFile;
     HashMap<String,Integer> forwardIndex;
-    HashMap<String,ArrayList<ScoredURL> > invertedIndex;
-    //HashMap<String,Integer> documentFrequency;
+    HashMap<String,File> documentMonitor;
 
-    public IndexerThread(String sourceDir, String crawlFile,
-                         HashMap<String, ArrayList<ScoredURL>> invertedIndex) {
-
+    public IndexerThread(String sourceDir, String targetDir, String crawlFile,
+                         HashMap<String, File> documentMonitor) {
         this.sourceDir = sourceDir;
+        this.targetDir = targetDir;
         this.crawlFile = crawlFile;
         this.forwardIndex = new HashMap<>();
-        this.invertedIndex = invertedIndex;
-        //this.documentFrequency = documentFrequency;
+        this.documentMonitor = documentMonitor;
     }
+
+
 
     @Override
     public void run() {
@@ -61,19 +60,35 @@ public class IndexerThread implements Runnable {
 
 
             for(String word : forwardIndex.keySet()) {
-                synchronized (invertedIndex) {
-                    if(!invertedIndex.containsKey(word)) {
-                        invertedIndex.put(word,new ArrayList<>());
+                synchronized (documentMonitor) {
+                    if(!documentMonitor.containsKey(word)) {
+                        documentMonitor.put(word,new File(targetDir + "/" + word + ".idx"));
                     }
+                }
 
-                    invertedIndex.get(word).add(new ScoredURL(url, forwardIndex.get(word)));
+                synchronized (documentMonitor.get(word)) {
+                    //System.out.println(documentMonitor.get(word).getPath());
+
+                    try (FileWriter writer = new FileWriter(documentMonitor.get(word).getPath(),true)) {
+                        writer.write(url + " " + forwardIndex.get(word) + "\n");
+                    } catch (FileNotFoundException e) {
+                        System.out.println("Could not write to file");
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        System.out.println("IO exception");
+                        e.printStackTrace();
+                    } catch (Exception e) {
+                        System.out.println("Hello Darkness my old friend :)");
+                        e.printStackTrace();
+                    }
                 }
             }
 
         } catch (FileNotFoundException e) {
-            System.out.println("File not found");
+            System.out.println("CrawlFile not found");
             e.printStackTrace();
         } catch (IOException e) {
+            System.out.println("IO exception at crawlfile");
             e.printStackTrace();
         }
     }

@@ -1,53 +1,38 @@
 package Indexificator;
 
+
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 public class Indexificator {
-    HashMap<String,ArrayList<ScoredURL>> invertedIndex;
-    //HashMap<String,Integer> documentFrequency;
+    HashMap<String,File> documentMonitor;
     ExecutorService executorService;
 
-    public Indexificator(HashMap<String, ArrayList<ScoredURL> > invertedIndex) {
-        this.invertedIndex = invertedIndex;
-        //this.documentFrequency = documentFrequency;
-        executorService = Executors.newFixedThreadPool(50);
-    }
-
-    public Indexificator(HashMap<String, ArrayList<ScoredURL> > invertedIndex, int maxThread) {
-        this.invertedIndex = invertedIndex;
-        //this.documentFrequency = documentFrequency;
-        executorService = Executors.newFixedThreadPool(maxThread);
-    }
-
     public Indexificator() {
-        invertedIndex = new HashMap<>();
-        //documentFrequency = new HashMap<>();
+        documentMonitor =  new HashMap<>();
         executorService = Executors.newFixedThreadPool(50);
     }
 
     public Indexificator(int maxThread) {
-        invertedIndex = new HashMap<>();
-        //documentFrequency = new HashMap<>();
+        documentMonitor = new HashMap<>();
         executorService = Executors.newFixedThreadPool(maxThread);
     }
 
 
 
-    private void buildIndex(final String sourceDir) {
+    private void buildIndex(final String sourceDir,final String targetDir) {
         File source = new File(sourceDir);
         FilenameFilter crawldataFilter = (dir, name)->name.toLowerCase().endsWith(".crawldata");
 
-        for (String file : source.list(crawldataFilter)) {
-            executorService.execute(new IndexerThread(sourceDir,file,invertedIndex));
+        for (String crawlFile : source.list(crawldataFilter)) {
+            executorService.execute(new IndexerThread(sourceDir,targetDir,crawlFile,documentMonitor));
         }
 
         executorService.shutdown();
     }
+/*
 
     public void flushIndex(String fileName) {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName))) {
@@ -56,6 +41,7 @@ public class Indexificator {
             e.printStackTrace();
         }
     }
+*/
 /*
     public void flushDocumentFrequency (String fileName) {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName))) {
@@ -66,6 +52,7 @@ public class Indexificator {
     }*/
 
 
+/*
     public void index(String sourceDir,String targetDir) throws InterruptedException {
         File source = new File(sourceDir);
         FilenameFilter crawldataFilter = (dir, name)->name.toLowerCase().endsWith(".crawldata");
@@ -87,10 +74,11 @@ public class Indexificator {
         t1.join();
 
     }
+*/
 
     public static void main(String[] args) throws InterruptedException {
 
-        new Indexificator(10).index("Crawldata","InvertedIndex");
+        new Indexificator(10).buildIndex("Crawldata","InvertedIndex");
     }
 
 }
