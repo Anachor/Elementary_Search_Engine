@@ -23,8 +23,16 @@ public class Client {
 
     public SearchResult read() throws IOException, ClassNotFoundException {
         SearchResult s = (SearchResult) nc.read();
-        System.out.println(s.getResult());
+        System.out.println(s.getResults());
         return s;
+    }
+
+    public void clear() {
+        try {
+            nc.clear();
+        } catch (IOException e) {
+            System.out.println("Error clearing stream" + e);
+        }
     }
 
     public void close() {

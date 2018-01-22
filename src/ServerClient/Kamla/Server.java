@@ -10,6 +10,7 @@ public class Server {
     Server() {
         try {
             serverSocket = new ServerSocket(33333);
+            System.out.println("Server started");
             while (true) {
                 //new Thread(new ServerThread(new NetworkUtil(serverSocket.accept()))).start();
                 Socket clientSocket = serverSocket.accept();
