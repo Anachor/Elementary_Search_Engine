@@ -4,13 +4,10 @@ import ServerClient.SearchQuery;
 import ServerClient.SearchResult;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 public class GUI extends Application{
@@ -18,8 +15,8 @@ public class GUI extends Application{
     private Client client;
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
-        client = new Client("127.0.0.1", 33333);
+    public void start(Stage primaryStage) throws IOException{
+        client = new Client("192.168.0.103", 33333);
 
         HBox searchBar = makeSearchBar();
         window = new BorderPane();
@@ -39,12 +36,14 @@ public class GUI extends Application{
             client.write(query);
             SearchResult result = client.read();
 
-            VBox resultsList = new VBox();
-            for (String url : result.getResults()) {
-                TextArea t = new TextArea(url);
-                resultsList.getChildren().add(t);
+            ListView resultsList = new ListView();
+            for ( String s: result.getResults()) {
+                Hyperlink link = new Hyperlink(s);
+                link.setOnAction( e -> {
+                    getHostServices().showDocument(s);
+                });
+                resultsList.getItems().add(link);
             }
-
             window.setCenter(resultsList);
 
         } catch (IOException | ClassNotFoundException e) {
