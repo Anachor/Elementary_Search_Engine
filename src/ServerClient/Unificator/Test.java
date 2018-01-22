@@ -1,4 +1,7 @@
-package Indexificator;
+package ServerClient.Unificator;
+
+import Indexificator.URLTermFrequencyPair;
+import ServerClient.SearchQuery;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,13 +15,11 @@ public class Test {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("TargetDir1/invertedIndex.idx"))) {
             invertedIndex = (HashMap<String,ArrayList<URLTermFrequencyPair>>)ois.readObject();
             System.out.println("***");
+            Unificator unificator = new Unificator(invertedIndex);
             Scanner sc = new Scanner(System.in);
             while (true) {
-                String p = sc.nextLine().toLowerCase();
-                List l = invertedIndex.get(p);
-                Collections.sort(l,(x,y)->((URLTermFrequencyPair)y).score-((URLTermFrequencyPair)x).score);
-                //for()
-                System.out.println(l);
+                String p = sc.nextLine();
+                System.out.println(unificator.getResults(new SearchQuery(p)));
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
