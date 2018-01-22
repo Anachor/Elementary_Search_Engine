@@ -12,11 +12,11 @@ public class IndexerThread implements Runnable {
     final String sourceDir;
     final String crawlFile;
     HashMap<String,Integer> forwardIndex;
-    HashMap<String,ArrayList<ScoredURL> > invertedIndex;
+    HashMap<String,ArrayList<URLTermFrequencyPair> > invertedIndex;
     //HashMap<String,Integer> documentFrequency;
 
     public IndexerThread(String sourceDir, String crawlFile,
-                         HashMap<String, ArrayList<ScoredURL>> invertedIndex) {
+                         HashMap<String, ArrayList<URLTermFrequencyPair>> invertedIndex) {
 
         this.sourceDir = sourceDir;
         this.crawlFile = crawlFile;
@@ -66,7 +66,7 @@ public class IndexerThread implements Runnable {
                         invertedIndex.put(word,new ArrayList<>());
                     }
 
-                    invertedIndex.get(word).add(new ScoredURL(url, forwardIndex.get(word)));
+                    invertedIndex.get(word).add(new URLTermFrequencyPair(url, forwardIndex.get(word)));
                 }
             }
 

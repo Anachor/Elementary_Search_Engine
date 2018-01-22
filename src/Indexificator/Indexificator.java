@@ -8,17 +8,17 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class Indexificator {
-    HashMap<String,ArrayList<ScoredURL>> invertedIndex;
+    HashMap<String,ArrayList<URLTermFrequencyPair>> invertedIndex;
     //HashMap<String,Integer> documentFrequency;
     ExecutorService executorService;
 
-    public Indexificator(HashMap<String, ArrayList<ScoredURL> > invertedIndex) {
+    public Indexificator(HashMap<String, ArrayList<URLTermFrequencyPair> > invertedIndex) {
         this.invertedIndex = invertedIndex;
         //this.documentFrequency = documentFrequency;
         executorService = Executors.newFixedThreadPool(50);
     }
 
-    public Indexificator(HashMap<String, ArrayList<ScoredURL> > invertedIndex, int maxThread) {
+    public Indexificator(HashMap<String, ArrayList<URLTermFrequencyPair> > invertedIndex, int maxThread) {
         this.invertedIndex = invertedIndex;
         //this.documentFrequency = documentFrequency;
         executorService = Executors.newFixedThreadPool(maxThread);
@@ -56,6 +56,8 @@ public class Indexificator {
             e.printStackTrace();
         }
     }
+
+
 /*
     public void flushDocumentFrequency (String fileName) {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName))) {
@@ -77,9 +79,7 @@ public class Indexificator {
         executorService.shutdown();
         executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.HOURS);
 
-        for(String key : invertedIndex.keySet()) {
-            invertedIndex.get(key).sort((x,y)->y.score-x.score);
-        }
+
 
         Thread t1 = new Thread(()->flushIndex(targetDir + "/" + "invertedIndex.idx"));
         t1.start();
@@ -90,7 +90,7 @@ public class Indexificator {
 
     public static void main(String[] args) throws InterruptedException {
 
-        new Indexificator(10).index("Crawldata","InvertedIndex");
+        new Indexificator(10).index("Crawldata","TargetDir1");
     }
 
 }
