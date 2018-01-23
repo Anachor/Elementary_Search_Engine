@@ -46,10 +46,10 @@ public class Unificator {
             }
         }
 
-        /*System.out.println(result);
+        System.out.println(result);
         Collections.sort(result);
         System.out.println("Sorted");
-        System.out.println(result);*/
+        System.out.println(result);
 
         List<String> urlList = new ArrayList<>();
         for(ScoredURL scoredURL : result) {

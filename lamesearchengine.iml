@@ -68,8 +68,13 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.idea" />
       <excludeFolder url="file://$MODULE_DIR$/Crawldata" />
+      <excludeFolder url="file://$MODULE_DIR$/Crawldata1" />
       <excludeFolder url="file://$MODULE_DIR$/ForwardIndexDirectory" />
       <excludeFolder url="file://$MODULE_DIR$/InvertedIndex" />
+      <excludeFolder url="file://$MODULE_DIR$/LameInternetSearchEngine" />
+      <excludeFolder url="file://$MODULE_DIR$/TargetDir1" />
+      <excludeFolder url="file://$MODULE_DIR$/TargetF" />
+      <excludeFolder url="file://$MODULE_DIR$/Test" />
     </content>
     <content url="file://$MODULE_DIR$/out" />
     <orderEntry type="inheritedJdk" />

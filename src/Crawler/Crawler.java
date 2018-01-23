@@ -1,6 +1,7 @@
 package Crawler;
 
 import java.util.*;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -37,10 +38,6 @@ public class Crawler {
                 continue;
             }
 
-            System.out.print(urlQueue.size() + " ");
-            System.out.print(urlQueue.peek() + " ");
-            System.out.print(urlQueue.size() + " ");
-
             URLTrial top = urlQueue.remove();
             System.out.println(top.url + " " + top.failCount + " " + top.depth + " "+urlQueue.size());
             threadPool.execute(new CrawlThread(urlCount, urlQueue, top, printer ));
@@ -51,7 +48,7 @@ public class Crawler {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        String[] root = {"https://en.wikipedia.org/wiki/Main_Page"};
+        String[] root = {"https://sentry.io/welcome/"};
         Crawler spiderMan = new Crawler(root, "./Crawldata");
         spiderMan.crawl();
     }

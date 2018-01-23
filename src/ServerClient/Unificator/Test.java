@@ -12,7 +12,7 @@ import java.util.*;
 public class Test {
     public static void main(String[] args) {
         HashMap<String,ArrayList<URLTermFrequencyPair>> invertedIndex;
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("TargetDir1/invertedIndex.idx"))) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("TargetF/invertedIndex.idx"))) {
             invertedIndex = (HashMap<String,ArrayList<URLTermFrequencyPair>>)ois.readObject();
             System.out.println("***");
             Unificator unificator = new Unificator(invertedIndex);

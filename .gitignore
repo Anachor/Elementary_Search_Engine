@@ -2,3 +2,7 @@
 out/
 *.class
 Crawldata/
+ForwardIndexDirectory
+InvertedIndex
+TargetDir1
+Test

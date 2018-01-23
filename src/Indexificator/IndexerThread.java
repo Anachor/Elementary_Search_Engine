@@ -70,6 +70,7 @@ public class IndexerThread implements Runnable {
                 }
             }
 
+
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
             e.printStackTrace();

@@ -6,7 +6,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-class Printer {
+public class Printer {
     String targetDirectory;
     HashMap<String, String> urlCacheHash;
     ExecutorService threadPool;

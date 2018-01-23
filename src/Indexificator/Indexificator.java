@@ -90,7 +90,7 @@ public class Indexificator {
 
     public static void main(String[] args) throws InterruptedException {
 
-        new Indexificator(10).index("Crawldata","TargetDir1");
+        new Indexificator(10).index("Crawldata1","TargetF");
     }
 
 }
