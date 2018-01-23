@@ -51,7 +51,8 @@ class Crawler {
 
     public static void main(String[] args) throws InterruptedException {
         String[] root = {"https://en.wikipedia.org/wiki/The_Meaning_of_It_All",
-                "https://en.wikipedia.org/wiki/List_of_algorithms"};
+                "https://en.wikipedia.org/wiki/List_of_algorithms",
+                "https://en.wikipedia.org/wiki/Bangladesh"};
 
         Crawler spiderMan = new Crawler(root, "./Crawldata1");
         spiderMan.crawl();
