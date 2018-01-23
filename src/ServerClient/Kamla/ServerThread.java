@@ -25,10 +25,11 @@ public class ServerThread implements Runnable {
                 nc.write(s);
             }
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error reading from network.");
+            System.out.println("Error reading from network. Closing Connection...");
         } finally {
             try {
                 nc.close();
+                System.out.println("Connection closed");
             } catch (IOException e) {
                 System.out.println("Error closing Connection: " + e);
             }

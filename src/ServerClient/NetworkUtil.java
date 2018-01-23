@@ -34,5 +34,9 @@ public class NetworkUtil implements AutoCloseable{
     public void close() throws IOException {
         socket.close();
     }
+
+    public void clear() throws IOException{
+        oos.flush();
+    }
 }
 

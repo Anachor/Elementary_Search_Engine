@@ -4,9 +4,9 @@ import Indexificator.URLTermFrequencyPair;
 import ServerClient.SearchQuery;
 import edu.stanford.nlp.simple.Sentence;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import ServerClient.SearchResult;
 
 public class Unificator {
     HashMap<String,ArrayList<URLTermFrequencyPair>> invertedIndex;
@@ -24,7 +24,7 @@ public class Unificator {
         return sentence.lemmas();
     }
 
-    public List<String> getResults(SearchQuery searchQuery) {
+    public SearchResult getResults(SearchQuery searchQuery) {
         int counter = 0;
         List<ScoredURL> result = new ArrayList<>();
         HashMap<String ,Integer> indexHash = new HashMap<>();
@@ -56,7 +56,7 @@ public class Unificator {
             urlList.add(scoredURL.url);
         }
 
-        return urlList;
+        return new SearchResult(urlList);
 
     }
 }
