@@ -28,7 +28,7 @@ public class Server {
             while (true) {
                 //new Thread(new ServerThread(new NetworkUtil(serverSocket.accept()))).start();
                 Socket clientSocket = serverSocket.accept();
-                ServerThread serverThread = new ServerThread(clientSocket,invertedIndex);
+                ServerThread serverThread = new ServerThread(clientSocket,invertedIndex, corpus);
                 Thread t = new Thread(serverThread);
                 t.start();
 

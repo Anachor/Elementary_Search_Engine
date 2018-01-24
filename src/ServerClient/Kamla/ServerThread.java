@@ -19,10 +19,11 @@ public class ServerThread implements Runnable {
     }
 
     public ServerThread(Socket clientSocket,
-                        HashMap<String, ArrayList<URLTermFrequencyPair>> invertedIndex)
+                        HashMap<String, ArrayList<URLTermFrequencyPair>> invertedIndex,
+                        HashMap<String, Integer> corpus)
             throws IOException {
         this.nc = new NetworkUtil(clientSocket);
-        this.unificator = new Unificator(invertedIndex);
+        this.unificator = new Unificator(invertedIndex, corpus);
     }
 
     @Override

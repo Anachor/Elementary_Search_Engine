@@ -11,18 +11,26 @@ import java.util.List;
 
 public class Unificator {
     HashMap<String,ArrayList<URLTermFrequencyPair>> invertedIndex;
+    SpellChecker spellChecker;
 
-    public Unificator(HashMap<String, ArrayList<URLTermFrequencyPair>> invertedIndex) {
+    public Unificator(HashMap<String, ArrayList<URLTermFrequencyPair>> invertedIndex, HashMap<String, Integer> corpus) {
         this.invertedIndex = invertedIndex;
+        spellChecker = new SpellChecker(corpus);
     }
 
     private List<String> processQuery(SearchQuery searchQuery) {
         String s = searchQuery.getQuery().toLowerCase();
         s = s.replaceAll("[\\.,!?;'~/\\-()\\[\\]{}:`\"]","");
 
-
         Sentence sentence = new Sentence(s);
-        return sentence.lemmas();
+        List<String> lemmas = sentence.lemmas();
+        List<String> tokens = new ArrayList<>();
+
+        for (String str: lemmas)
+            tokens.add(spellChecker.getSuggestion(str).get(0));
+
+        System.out.println(tokens);
+        return tokens;
     }
 
     public SearchResult getResults(SearchQuery searchQuery) {
