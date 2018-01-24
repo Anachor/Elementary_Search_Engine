@@ -31,7 +31,7 @@ public class ServerThread implements Runnable {
             while (true) {
                 SearchQuery query = (SearchQuery) nc.read();
                 System.out.println(query.getQuery());
-                SearchResult s = new SearchResult(unificator.getResults(query));
+                SearchResult s = unificator.getResults(query);
                 nc.write(s);
             }
         } catch (IOException | ClassNotFoundException e) {

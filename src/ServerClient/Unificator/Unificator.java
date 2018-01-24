@@ -4,6 +4,7 @@ import Indexificator.URLTermFrequencyPair;
 import ServerClient.SearchQuery;
 import edu.stanford.nlp.simple.Sentence;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import ServerClient.SearchResult;

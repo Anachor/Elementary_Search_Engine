@@ -22,9 +22,8 @@ public class Server {
         try {
             serverSocket = new ServerSocket(33333);
             System.out.println("Server started");
+            init("TargetF");
             while (true) {
-
-                init("TargetF");
                 //new Thread(new ServerThread(new NetworkUtil(serverSocket.accept()))).start();
                 Socket clientSocket = serverSocket.accept();
                 ServerThread serverThread = new ServerThread(clientSocket,invertedIndex);

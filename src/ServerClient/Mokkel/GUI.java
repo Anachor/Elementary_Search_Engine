@@ -2,6 +2,7 @@ package ServerClient.Mokkel;
 
 import ServerClient.SearchQuery;
 import ServerClient.SearchResult;
+import edu.stanford.nlp.ie.machinereading.structure.Event;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -11,20 +12,59 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class GUI extends Application{
-    private BorderPane window;
+    private BorderPane searchPane;
+    private Stage window;
     private Client client;
 
     @Override
     public void start(Stage primaryStage) throws IOException{
-        client = new Client("192.168.0.103", 33333);
 
-        HBox searchBar = makeSearchBar();
-        window = new BorderPane();
-        window.setTop(searchBar);
+        window = primaryStage;
 
+        Scene promptScene = makePromptScene();
+        Scene searchScene = makeSearchScene();
+        
         primaryStage.setTitle("Client");
-        primaryStage.setScene(new Scene(window, 640, 480));
+        primaryStage.setScene(makePromptScene());
         primaryStage.show();
+    }
+
+    private Scene makeSearchScene () {
+        HBox searchBar = makeSearchBar();
+        searchPane = new BorderPane();
+        searchPane.setTop(searchBar);
+        return new Scene(searchPane, 640, 480);
+    }
+
+
+    private HBox makeSearchBar() {
+        TextField searchBox = new TextField();
+        searchBox.setPromptText("Enter keyword");
+
+        Button searchButton = new Button("Search");
+        searchButton.setOnAction(e -> {
+            searchButtonAction(searchBox);
+        });
+
+        Button clearButton = new Button("Clear Results");
+        clearButton.setOnAction(e -> {
+            System.out.println("Cleared!!!");
+            searchPane.setCenter(null);
+        });
+
+        searchBox.setOnKeyPressed((event) -> {
+            if(event.getCode() == KeyCode.ENTER) {
+                searchButtonAction(searchBox);
+            }
+        });
+
+        HBox searchBar = new HBox(5);
+        searchBar.getChildren().addAll(searchBox, searchButton, clearButton);
+        HBox.setHgrow(searchBox, Priority.ALWAYS);
+        HBox.setHgrow(searchButton, Priority.NEVER);
+        HBox.setHgrow(clearButton, Priority.NEVER);
+
+        return searchBar;
     }
 
     private void searchButtonAction(TextField searchBox) {
@@ -44,7 +84,7 @@ public class GUI extends Application{
                 });
                 resultsList.getItems().add(link);
             }
-            window.setCenter(resultsList);
+            searchPane.setCenter(resultsList);
 
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Error reading from Network");
@@ -52,33 +92,34 @@ public class GUI extends Application{
         }
     }
 
-    private HBox makeSearchBar() {
-        TextField searchBox = new TextField();
-        searchBox.setPromptText("Enter keyword");
+    private Scene makePromptScene() {
+        VBox promptWindow = new VBox(10);
 
-        Button searchButton = new Button("Search");
-        searchButton.setOnAction(e -> {
-            searchButtonAction(searchBox);
+        Label enterIp = new Label("Enter IP Address: ");
+
+        TextField ipBox = new TextField("127.0.0.1");
+        ipBox.setOnKeyPressed( e -> {
+            if (e.getCode() == KeyCode.ENTER)
+            connectButtonAction(ipBox);
         });
 
-        Button clearButton = new Button("Clear Results");
-        clearButton.setOnAction(e -> {
-            System.out.println("Cleared!!!");
-            window.setCenter(null);
+        Button connectButton = new Button("Connect");
+        connectButton.setOnAction( e -> {
+            connectButtonAction(ipBox);
         });
 
-        searchBox.setOnKeyPressed((event) -> {
-            if(event.getCode() == KeyCode.ENTER) {
-                searchButtonAction(searchBox);
-            }
-        });
+        promptWindow.getChildren().addAll(enterIp, ipBox, connectButton);
+        return new Scene(promptWindow, 200, 100);
+    }
 
-        HBox searchBar = new HBox(5);
-        searchBar.getChildren().addAll(searchBox, searchButton, clearButton);
-        HBox.setHgrow(searchBox, Priority.ALWAYS);
-        HBox.setHgrow(searchButton, Priority.NEVER);
-        HBox.setHgrow(clearButton, Priority.NEVER);
-
-        return searchBar;
+    private void connectButtonAction(TextField searchBox) {
+        try {
+            String s = searchBox.getText();
+            client = new Client(s, 33333);
+            window.setScene(makeSearchScene());
+        } catch (IOException e1) {
+            e1.printStackTrace();
+            System.out.println("Error Connecting to Serevr.");
+        }
     }
 }
