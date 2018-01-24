@@ -13,10 +13,12 @@ import java.net.Socket;
 import java.rmi.UnexpectedException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class Server {
     ServerSocket serverSocket;
-    HashMap< String,ArrayList<URLTermFrequencyPair> > invertedIndex;
+    HashMap < String,ArrayList<URLTermFrequencyPair> > invertedIndex;
+    HashMap < String, Integer> corpus;
 
     Server() {
         try {
@@ -49,9 +51,21 @@ public class Server {
             e.printStackTrace();
             throw new UnexpectedException("Class not found. Probably Missing files");
         }
+        BuildCorpus();
     }
 
     public static void main(String[] args) {
         new Server();
+    }
+
+    void BuildCorpus() {
+        corpus = new HashMap<>();
+        for (String s: invertedIndex.keySet()) {
+            int count = 0;
+            for (URLTermFrequencyPair pr: invertedIndex.get(s))
+                count += pr.score;
+            corpus.put(s, count);
+        }
+        System.out.println("Corpus built");
     }
 }
