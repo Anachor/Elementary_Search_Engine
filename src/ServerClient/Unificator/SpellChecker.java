@@ -53,8 +53,8 @@ public class SpellChecker {
             if (editDistance == 0) return -1;
             else if(rankedStrings.editDistance == 0) return 1;
 
-            if (frequency > rankedStrings.frequency) return -1;
-            else if (frequency == rankedStrings.frequency) return editDistance - rankedStrings.editDistance;
+            if (editDistance < rankedStrings.editDistance) return -1;
+            else if (editDistance == rankedStrings.editDistance) return rankedStrings.frequency-frequency;
             else return 1;
 
         }
