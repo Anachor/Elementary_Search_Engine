@@ -26,8 +26,14 @@ public class Unificator {
         List<String> lemmas = sentence.lemmas();
         List<String> tokens = new ArrayList<>();
 
-        for (String str: lemmas)
+        System.out.println(lemmas);
+
+        for (String str: lemmas) {
+            System.out.println(spellChecker.dictionary.containsKey(str));
+            System.out.println(invertedIndex.containsKey(str));
             tokens.add(spellChecker.getSuggestion(str).get(0));
+            System.out.println(spellChecker.getSuggestion(str));
+        }
 
         System.out.println(tokens);
         return tokens;
@@ -55,10 +61,10 @@ public class Unificator {
             }
         }
 
-        System.out.println(result);
+        //System.out.println(result);
         Collections.sort(result);
-        System.out.println("Sorted");
-        System.out.println(result);
+        //System.out.println("Sorted");
+        //System.out.println(result);
 
         List<String> urlList = new ArrayList<>();
         for(ScoredURL scoredURL : result) {

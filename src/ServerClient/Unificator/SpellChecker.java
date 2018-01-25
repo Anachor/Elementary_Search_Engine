@@ -51,6 +51,7 @@ public class SpellChecker {
             RankedStrings rankedStrings = (RankedStrings) o;
 
             if (editDistance == 0) return -1;
+            else if(rankedStrings.editDistance == 0) return 1;
 
             if (frequency > rankedStrings.frequency) return -1;
             else if (frequency == rankedStrings.frequency) return editDistance - rankedStrings.editDistance;
