@@ -31,12 +31,19 @@ public class Unificator {
         for (String str: lemmas) {
             System.out.println(spellChecker.dictionary.containsKey(str));
             System.out.println(invertedIndex.containsKey(str));
-            tokens.add(spellChecker.getSuggestion(str).get(0));
-            System.out.println(spellChecker.getSuggestion(str));
+
+            List<String> suggestions = spellChecker.getSuggestion(str);
+            System.out.println(suggestions);
+
+            if (suggestions.isEmpty()) {
+                tokens.add(str);
+            } else {
+                tokens.add(suggestions.get(0));
+            }
         }
 
         System.out.println(tokens);
-        return lemmas;
+        return tokens;
     }
 
     public SearchResult getResults(SearchQuery searchQuery) {
