@@ -84,6 +84,12 @@ public class GUI extends Application{
                 });
                 resultsList.getItems().add(link);
             }
+
+            if (result.getResults().size() == 0) {
+                Label notFoundLabel = new Label("No results found.");
+                resultsList.getItems().add(notFoundLabel);
+            }
+
             searchPane.setCenter(resultsList);
 
         } catch (IOException | ClassNotFoundException e) {

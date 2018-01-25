@@ -36,7 +36,7 @@ public class Unificator {
         }
 
         System.out.println(tokens);
-        return tokens;
+        return lemmas;
     }
 
     public SearchResult getResults(SearchQuery searchQuery) {
